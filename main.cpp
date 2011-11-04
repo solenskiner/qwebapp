@@ -1,10 +1,17 @@
 #include <QtGui/QApplication>
+#include <QUrl>
+#include <QString>
+#include <QStringList>
+#include <QTextStream>
 #include "mainwindow.hpp"
-#include "session_manager.hpp"
+//#include "session_manager.hpp"
 
 void error() {
     QTextStream out(stdout);
-    out << "Usage: cute-web-app [%u]" << '\n' << flush;
+    out << "Usage: qwebapp %u" << '\n';
+    out << '\n';
+    out << "Just make a desktop shortcut for any page you want," << '\n' << flush;
+    out << " passing the url as a parameter. A page manager is comming." << '\n' << flush;
     exit(1);
 }
 
@@ -16,7 +23,7 @@ int main(int argc, char *argv[]) {
 
   QUrl url;
 
-  /*if (arguments.length() == 2) {
+  if (arguments.length() == 2) {
     url.setUrl(arguments.at(1));
     if (url.isValid()) {
       QApplication a(argc, argv);
@@ -30,9 +37,9 @@ int main(int argc, char *argv[]) {
     session_manager w();
     w.show();
     return a.exec();
-  }*/
-  QApplication a(argc, argv);
-  MainWindow w(QUrl("http://www.facebook.com/"));
-  w.show();
+  }
+  /*QApplication a(argc, argv);
+  MainWindow w(QUrl("http://www.reddit.com/"));
+  w.show();*/
   return a.exec();
 }

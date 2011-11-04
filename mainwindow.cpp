@@ -26,6 +26,8 @@ MainWindow::MainWindow(QUrl url) {
   }
   setCentralWidget(view[0]);
 
+  view[VIEW_HIDDEN]->setVisible (0);
+
   view[VIEW_MAIN]->page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
   connect(view[VIEW_MAIN], SIGNAL(linkClicked(const QUrl&)), this, SLOT(handle_link(const QUrl&)));
   connect(view[VIEW_HIDDEN], SIGNAL(urlChanged(const QUrl&)), this, SLOT(handle_redirect(const QUrl&)));
@@ -55,31 +57,31 @@ void MainWindow::handle_loaded(bool loaded) {
 
 void MainWindow::set_data_paths(QWebView* view) {
   view->settings()->setIconDatabasePath(QDesktopServices::DataLocation + QDir::separator() +
-                                                                              QCoreApplication::applicationName() + QDir::separator() +
-                                                                              site->toString() + QDir::separator() +
-                                                                              "IconDatabase"
-                                                                              );
+                                        QCoreApplication::applicationName() + QDir::separator() +
+                                        site->toString() + QDir::separator() +
+                                        "IconDatabase"
+                                       );
   view->settings()->setLocalStoragePath(QDesktopServices::DataLocation + QDir::separator() +
-                                                                              QCoreApplication::applicationName() + QDir::separator() +
-                                                                              site->toString() + QDir::separator() +
-                                                                              "LocalStorage"
-                                                                              );
+                                        QCoreApplication::applicationName() + QDir::separator() +
+                                        site->toString() + QDir::separator() +
+                                        "LocalStorage"
+                                       );
   view->settings()->setOfflineStoragePath(QDesktopServices::DataLocation + QDir::separator() +
-                                                                              QCoreApplication::applicationName() + QDir::separator() +
-                                                                              site->toString() + QDir::separator() +
-                                                                              "OfflineStorage"
-                                                                              );
+                                          QCoreApplication::applicationName() + QDir::separator() +
+                                          site->toString() + QDir::separator() +
+                                          "OfflineStorage"
+                                         );
   view->settings()->setOfflineWebApplicationCachePath(QDesktopServices::DataLocation + QDir::separator() +
-                                                                                                          QCoreApplication::applicationName() + QDir::separator() +
-                                                                                                          site->toString() + QDir::separator() +
-                                                                                                          "OfflineWebApplicationCache"
-                                                                                                          );
+                                                      QCoreApplication::applicationName() + QDir::separator() +
+                                                      site->toString() + QDir::separator() +
+                                                      "OfflineWebApplicationCache"
+                                                     );
 }
 
 MainWindow::~MainWindow() {
-  disconnect(view[VIEW_MAIN], SIGNAL(linkClicked(const QUrl&)), this, SLOT(handle_link(const QUrl&)));
-  disconnect(view[VIEW_HIDDEN], SIGNAL(urlChanged(const QUrl&)), this, SLOT(handle_redirect(const QUrl&)));
-  disconnect(view[VIEW_HIDDEN], SIGNAL(loadFinished(bool)), this, SLOT(handle_loaded(bool)));
+  disconnect(view[VIEW_MAIN],   SIGNAL(linkClicked(const QUrl&)), this, SLOT(handle_link(const QUrl&)));
+  disconnect(view[VIEW_HIDDEN], SIGNAL(urlChanged(const QUrl&)),  this, SLOT(handle_redirect(const QUrl&)));
+  disconnect(view[VIEW_HIDDEN], SIGNAL(loadFinished(bool)),       this, SLOT(handle_loaded(bool)));
   delete site;
   delete view[VIEW_MAIN];
   delete view[VIEW_HIDDEN];
